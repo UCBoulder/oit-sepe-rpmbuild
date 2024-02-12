@@ -4,9 +4,12 @@ FROM almalinux:8
 # Copying all contents of rpmbuild repo inside container
 COPY . .
 
+# Enable powertools "repo"
+RUN dnf install -y dnf-utils && dnf config-manager --set-enabled powertools
+
 # Installing tools needed for rpmbuild , 
 # depends on BuildRequires field in specfile, (TODO: take as input & install)
-RUN yum install -y rpm-build rpmdevtools gcc make python39 git
+RUN dnf install -y rpm-build rpmdevtools gcc make python39 git
 
 # Setting up node to run our JS file
 # Download Node Linux binary
